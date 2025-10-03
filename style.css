@@ -366,6 +366,41 @@ body{
   backface-visibility: hidden;
 }
 
+/* Mobile-specific optimizations */
+@media (max-width: 768px) {
+  body {
+    padding: 10px 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: auto;
+    min-height: 100vh;
+  }
+  
+  /* Reduce matrix animation complexity on mobile */
+  .matrix-container {
+    opacity: 0.1;
+  }
+  
+  .matrix-column {
+    display: none;
+  }
+  
+  .matrix-column:nth-child(odd) {
+    display: block;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 5px 0;
+  }
+  
+  /* Further reduce effects on small screens */
+  .matrix-container {
+    display: none;
+  }
+}
+
 .back-vid{
   position: absolute;
   left: 0;
@@ -1774,6 +1809,8 @@ nav h1{
     padding: 0 5%;
     align-items: center;
     text-align: center;
+    height: auto;
+    min-height: auto;
   }
 
   .hero-info{
@@ -1796,6 +1833,10 @@ nav h1{
     margin: 20px 0;
     width: 100%;
     max-width: 300px;
+    position: relative; /* Remove absolute positioning on mobile */
+    transform: none; /* Remove transform on mobile */
+    display: flex;
+    justify-content: center;
   }
 
   .discord-widget {
@@ -1824,6 +1865,7 @@ nav h1{
     flex-wrap: wrap;
     gap: 10px;
     margin: 15px 0;
+    width: 100%;
   }
 
   .info-sec{
@@ -1842,15 +1884,19 @@ nav h1{
 
   /* Music player responsive adjustments */
   .music-player-container {
+    position: fixed;
     top: 15px;
     right: 15px;
     transform: scale(0.85);
+    z-index: 1001;
   }
 
   .volume-control-widget {
+    position: fixed;
     bottom: 15px;
     left: 15px;
     transform: scale(0.9);
+    z-index: 1001;
   }
 
   /* Optimize matrix animation for mobile performance */
@@ -1878,6 +1924,9 @@ nav h1{
     line-height: 1.5;
     max-width: 100%;
     padding: 0 10px;
+    text-align: center;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
   }
 }
 
@@ -2149,6 +2198,11 @@ nav h1{
     margin: 10px 0;
     text-align: center;
     word-break: break-word;
+    max-width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+    overflow-wrap: break-word;
+    hyphens: auto;
   }
 
   .btn {
@@ -2416,6 +2470,24 @@ nav h1{
   * {
     max-width: 100%;
     box-sizing: border-box;
+  }
+
+  /* Additional mobile layout fixes */
+  .hero-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+  }
+
+  .hero p {
+    text-align: center;
+    max-width: 90%;
+    margin: 10px auto;
+    line-height: 1.6;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 }
 
@@ -2768,6 +2840,67 @@ nav h1{
 .reduced-effects .back-vid,
 .reduced-effects .loading-back-vid {
   opacity: 0.2;
+}
+
+/* Mobile device specific optimizations */
+.mobile-device {
+  /* Use CSS custom property for viewport height */
+  height: calc(var(--vh, 1vh) * 100);
+}
+
+.mobile-device .main-section {
+  min-height: calc(var(--vh, 1vh) * 95);
+  max-height: calc(var(--vh, 1vh) * 98);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mobile-device .hero {
+  height: auto;
+  min-height: auto;
+  flex-shrink: 0;
+}
+
+/* Performance mode optimizations */
+.performance-mode .matrix-container,
+.performance-mode .loading-matrix-container {
+  display: none !important;
+}
+
+.performance-mode .back-vid,
+.performance-mode .loading-back-vid {
+  opacity: 0.2 !important;
+}
+
+.performance-mode * {
+  animation-duration: 0.5s !important;
+  transition-duration: 0.2s !important;
+}
+
+/* Text overflow fixes for mobile */
+@media (max-width: 480px) {
+  .hero p {
+    word-spacing: -0.5px;
+    letter-spacing: -0.2px;
+  }
+  
+  /* Ensure text doesn't overflow container */
+  .hero-info {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+  }
+  
+  /* Additional spacing fixes */
+  .discord-widget-center {
+    margin: 10px auto !important;
+    padding: 0 5px;
+  }
+  
+  .btn {
+    word-break: break-word;
+    text-align: center;
+  }
 }
 
 /* Touch feedback improvements */
@@ -3498,6 +3631,35 @@ html {
   align-items: center;
   margin: 0 20px;
   gap: 15px;
+}
+
+/* Mobile responsive positioning for Discord widget */
+@media (max-width: 980px) {
+  .discord-widget-center {
+    position: relative;
+    transform: none;
+    margin: 20px auto;
+    max-width: 300px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    order: 3; /* Ensure it comes after profile image and text */
+  }
+}
+
+@media (max-width: 768px) {
+  .discord-widget-center {
+    margin: 15px auto;
+    max-width: 280px;
+  }
+}
+
+@media (max-width: 480px) {
+  .discord-widget-center {
+    margin: 10px auto;
+    max-width: 260px;
+    padding: 0 10px;
+  }
 }
 
 .discord-widget {
